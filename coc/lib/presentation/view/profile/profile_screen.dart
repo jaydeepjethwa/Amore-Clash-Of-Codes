@@ -39,17 +39,23 @@ class ProfileScreen extends StatelessWidget {
               _profileItem(
                 "Profile",
                 Icons.person,
-                () {},
+                () {
+                  Get.toNamed("/profile");
+                },
               ),
               _profileItem(
                 "Booking History",
                 Icons.history,
-                () {},
+                () {
+                  Get.toNamed("/bookingHistory");
+                },
               ),
               _profileItem(
                 "Rewards",
                 Icons.attach_money_outlined,
-                () {},
+                () {
+                  Get.toNamed("/reward");
+                },
               ),
               _profileItem(
                 "Saved Profile",

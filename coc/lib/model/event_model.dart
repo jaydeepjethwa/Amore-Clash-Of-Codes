@@ -22,9 +22,9 @@ class EventModel {
   String address;
   String photo;
   DateTime scheduledOn;
-  int capacity;
-  int available;
-  double distance;
+  int? capacity;
+  int? available;
+  double? distance;
 
   factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
         eventId: json["EventId"],

@@ -1,6 +1,4 @@
-// import 'package:coc/constant/color.dart';
 import 'package:coc/constant/color.dart';
-import 'package:coc/constant/size.dart';
 import 'package:coc/constant/textstyle.dart';
 import 'package:flutter/material.dart';
 
@@ -19,7 +17,9 @@ class Profile extends StatelessWidget {
               fit: BoxFit.contain,
               height: 32,
             ),
-            Padding(padding: const EdgeInsets.only(left: 10.0)),
+            const Padding(
+              padding: EdgeInsets.only(left: 10.0),
+            ),
             Text(
               "Profile",
               style: appStyle.copyWith(

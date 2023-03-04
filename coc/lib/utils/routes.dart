@@ -6,6 +6,9 @@ import 'package:coc/presentation/view/chat/chat_screen.dart';
 import 'package:coc/presentation/view/event/event_detail.dart';
 import 'package:coc/presentation/view/prefrences/prefrences1.dart';
 import 'package:coc/presentation/view/prefrences/prefrences2.dart';
+import 'package:coc/presentation/view/profile/booking_history.dart';
+import 'package:coc/presentation/view/profile/profile.dart';
+import 'package:coc/presentation/view/profile/rewards.dart';
 import 'package:get/get.dart';
 
 List<GetPage> routesList = [
@@ -48,6 +51,24 @@ List<GetPage> routesList = [
   GetPage(
     name: "/chat",
     page: () => const ChatScreen(),
+    transitionDuration: const Duration(milliseconds: 500),
+    transition: Transition.rightToLeftWithFade,
+  ),
+    GetPage(
+    name: "/bookingHistory",
+    page: () => const BookingHistory(),
+    transitionDuration: const Duration(milliseconds: 500),
+    transition: Transition.rightToLeftWithFade,
+  ),
+      GetPage(
+    name: "/reward",
+    page: () => const Rewards(),
+    transitionDuration: const Duration(milliseconds: 500),
+    transition: Transition.rightToLeftWithFade,
+  ),
+        GetPage(
+    name: "/profile",
+    page: () => const Profile(),
     transitionDuration: const Duration(milliseconds: 500),
     transition: Transition.rightToLeftWithFade,
   ),

@@ -13,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final int minLines;
   final int maxLines;
   final String hint;
+  final bool readOnly;
 
   const CustomTextField({
     super.key,
@@ -24,6 +25,7 @@ class CustomTextField extends StatelessWidget {
     this.minLines = 1,
     this.maxLines = 1,
     required this.hint,
+    this.readOnly = false,
   });
 
   @override
@@ -40,6 +42,7 @@ class CustomTextField extends StatelessWidget {
         inputFormatters: [
           LengthLimitingTextInputFormatter(maxCharacters),
         ],
+        readOnly: readOnly,
         obscureText: obscureText,
         minLines: minLines,
         maxLines: maxLines,

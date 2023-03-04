@@ -1,13 +1,14 @@
 import 'package:coc/constant/color.dart';
 import 'package:coc/constant/size.dart';
 import 'package:coc/constant/textstyle.dart';
+import 'package:coc/controller/login_controller.dart';
 import 'package:coc/presentation/widget/custom_form_field.dart';
 import 'package:coc/presentation/widget/custom_long_button.dart';
 import 'package:coc/presentation/widget/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends GetView<LoginController> {
   const LoginScreen({super.key});
 
   @override
@@ -35,14 +36,14 @@ class LoginScreen extends StatelessWidget {
                 capitalization: false,
                 maxCharacters: 10,
                 keyboardType: TextInputType.phone,
-                textController: TextEditingController(),
+                textController: controller.phoneC,
                 hint: "Phone Number",
               ),
               verticalSpacing(vs2),
               CustomLongButton(
                 buttonText: "Login",
                 onPressedFunction: () {
-                  Get.toNamed("/otp");
+                  controller.handleLogin();
                 },
               ),
             ],

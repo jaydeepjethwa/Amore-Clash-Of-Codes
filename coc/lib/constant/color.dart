@@ -6,6 +6,7 @@ Color gradient2 = const Color(0XFFDED6F4);
 // Home Page Card Color
 
 Color primary = const Color(0xFFFFB9DB);
+Color secondary = const Color(0xFFFDF6F9);
 
 Color grey = const Color(0xFF636363);
 Color lightGrey = const Color(0xFFF8F8F8);

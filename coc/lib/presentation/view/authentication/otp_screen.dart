@@ -49,7 +49,7 @@ class OTPScreen extends GetView<OtpController> {
                 style: text2,
                 children: [
                   TextSpan(
-                    text: "9326482460",
+                    text: controller.phoneNumber,
                     style: text2,
                   ),
                 ],

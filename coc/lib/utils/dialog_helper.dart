@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DialogHelper {
-
   //Loader Dialog
   static void showLoader(String title) {
     Get.dialog(
@@ -34,6 +33,36 @@ class DialogHelper {
       backgroundColor: white,
       borderRadius: 10.0,
       snackPosition: SnackPosition.BOTTOM,
+    );
+  }
+
+  static void showErrorDialog(String title, String description) {
+    Get.dialog(
+      Dialog(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                title,
+              ),
+              Text(
+                description,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Get.back();
+                  Get.back();
+                },
+                child: const Text(
+                  "Back",
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

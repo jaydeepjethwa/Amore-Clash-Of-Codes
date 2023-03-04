@@ -1,12 +1,18 @@
+import 'dart:convert';
+
+import 'package:coc/constant/color.dart';
+import 'package:coc/constant/size.dart';
 import 'package:coc/constant/textstyle.dart';
-import 'package:coc/presentation/view/prefrences/prefrences1.dart';
+import 'package:coc/controller/event_controller.dart';
+import 'package:coc/model/event_model.dart';
 import 'package:coc/presentation/widget/custom_long_button.dart';
 import 'package:flutter/material.dart';
-import 'package:coc/constant/textstyle.dart';
-import 'package:get/get.dart';
 
 class EventDetails extends StatelessWidget {
-  const EventDetails({super.key});
+  final EventController controller;
+  final EventModel event;
+  const EventDetails(
+      {super.key, required this.controller, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -32,40 +38,47 @@ class EventDetails extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      child: Text("Event Name", style: boldHeader),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.all(12),
+                        child: Text(event.name, style: boldHeader),
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(12),
                       child: Row(
                         children: [
-                          Text("200", style: text1),
+                          Text(
+                            (event.capacity - event.available).toString(),
+                            style: text1,
+                          ),
                           const Padding(padding: EdgeInsets.only(left: 5)),
-                          const Icon(Icons.people)
+                          Icon(
+                            Icons.people,
+                            color: primary,
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
-                Row(
-                  children: const [
-                    Image(
-                      image: AssetImage("assets/logo.png"),
-                      width: 300,
-                      height: 300,
-                    )
-                  ],
+                Image.memory(
+                  const Base64Decoder().convert(
+                    event.photo,
+                  ),
+                  width: getWidth(context) - 100,
                 ),
+                verticalSpacing(vs1),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Event Details", style: boldHeader),
                     Text(
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."),
-                    SizedBox(
-                      height: 10,
+                      event.description,
+                      style: text3,
+                      textAlign: TextAlign.justify,
                     ),
+                    verticalSpacing(vs1),
                     Row(
                       children: [
                         Text(
@@ -73,7 +86,7 @@ class EventDetails extends StatelessWidget {
                           style: text1,
                         ),
                         Text(
-                          "Mumbai, Maharashtra",
+                          event.address,
                           style: appStyle,
                         )
                       ],
@@ -85,7 +98,7 @@ class EventDetails extends StatelessWidget {
                           style: text1,
                         ),
                         Text(
-                          "5th March 2023",
+                          event.scheduledOn.toString().split(" ")[0],
                           style: appStyle,
                         )
                       ],
@@ -97,7 +110,7 @@ class EventDetails extends StatelessWidget {
                           style: text1,
                         ),
                         Text(
-                          "From 7 pm onword",
+                          event.scheduledOn.toString().split(" ")[1].split(".")[0],
                           style: appStyle,
                         )
                       ],
@@ -109,30 +122,20 @@ class EventDetails extends StatelessWidget {
                           style: text1,
                         ),
                         Text(
-                          "100",
+                          event.available.toString(),
                           style: appStyle,
                         )
                       ],
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Contact : ",
-                          style: text1,
-                        ),
-                        Text(
-                          "0123456789",
-                          style: appStyle,
-                        )
-                      ],
-                    ),
+                    verticalSpacing(vs2),
                   ],
                 ),
                 CustomLongButton(
-                    buttonText: "Reserve a Spot",
-                    onPressedFunction: () {
-                      Get.to(const Prefrence());
-                    })
+                  buttonText: "Reserve a Spot",
+                  onPressedFunction: () {
+                    controller.bookEvent(event);
+                  },
+                ),
               ],
             ),
           ),

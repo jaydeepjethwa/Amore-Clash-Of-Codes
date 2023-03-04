@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 
 class OtpController extends GetxController {
   late TextEditingController otpC1, otpC2, otpC3, otpC4, otpC5, otpC6;
+  String phoneNumber = "";
 
   @override
   void onInit() {
@@ -20,6 +21,7 @@ class OtpController extends GetxController {
     otpC4 = TextEditingController();
     otpC5 = TextEditingController();
     otpC6 = TextEditingController();
+    phoneNumber = Get.arguments[1]["phone"];
   }
 
   Future sendOtp() async {

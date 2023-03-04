@@ -28,7 +28,7 @@ apply plugin: 'com.google.gms.google-services'
 
 android {
     // compileSdkVersion flutter.compileSdkVersion
-    compileSdk 32
+    compileSdk 33
     ndkVersion flutter.ndkVersion
 
     compileOptions {

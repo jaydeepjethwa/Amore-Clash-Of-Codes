@@ -36,6 +36,9 @@ class LoginController extends GetxController {
             {
               "id": verificationId,
             },
+            {
+              "phone": phoneC.value.text,
+            },
           ],
         );
       },

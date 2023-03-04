@@ -31,8 +31,6 @@ class ChatController extends GetxController {
   String getRoomId() {
     String id1 = arguments[0]["id1"];
     String id2 = arguments[1]["id2"];
-    print(id1);
-    print(id2);
     if (int.parse(id1) < int.parse(id2)) {
       return "$id1$id2";
     } else {
@@ -44,7 +42,6 @@ class ChatController extends GetxController {
     if (messageC.value.text == "") {
       return;
     }
-
     Map<String, dynamic> message = {
       "sendBy": id1,
       "message": messageC.value.text,

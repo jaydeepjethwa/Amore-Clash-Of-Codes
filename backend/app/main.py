@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .database import Database
 
+from .routers import user_router, hotel_router, event_router
 
 app = FastAPI()
 
@@ -29,5 +30,6 @@ async def shutdown():
 async def main():
     return "Welcome to Amore"
 
-
-# app.include_router(auth_router, tags=["Authentication"], prefix="/auth")
+app.include_router(user_router, tags=["Users"], prefix="/users")
+app.include_router(hotel_router, tags=["Hotels"], prefix="/hotels")
+app.include_router(event_router, tags=["Events"], prefix="/events")

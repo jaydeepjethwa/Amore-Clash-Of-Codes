@@ -77,3 +77,16 @@ async def getUserEvents(user_id: str, conn: Connection):
         await cursor.close()
 
     return user_events
+
+
+async def verifyBooking(event_id: int, user_id: str, conn: Connection):
+    async with conn.cursor() as cursor:
+        try:
+            await cursor.execute("""SELECT * FROM EventBooking WHERE EventId = %s AND UserId = %s""", (event_id, user_id))
+            booking = await cursor.fetchone()
+        except Exception as err:
+            print(err)
+
+        await cursor.close()
+
+    return booking

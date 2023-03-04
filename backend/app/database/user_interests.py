@@ -2,13 +2,13 @@ from aiomysql.connection import Connection
 from ..models.user_interests import UserInterests
 
 
-async def addUser(user_id: str, gender: str, conn: Connection):
+async def addUser(user_id: str, gender: str, about: str, conn: Connection):
     async with conn.cursor() as cursor:
         try:
             await cursor.execute("""INSERT INTO UserInterests 
-                                    (UserId, Gender)
-                                    VALUES (%s, %s)""",
-                                 (user_id, gender))
+                                    (UserId, Gender, About)
+                                    VALUES (%s, %s, %s)""",
+                                 (user_id, gender, about))
             await conn.commit()
         except Exception as err:
             print(err)
@@ -30,13 +30,22 @@ async def addInterests(interest: UserInterests, conn: Connection):
 
         await cursor.close()
 
-# UserID VARCHAR(200) PRIMARY KEY,
-#     Gender VARCHAR(10),
-#     Type VARCHAR(20),
-#     Creativity TEXT,
-#     Sports TEXT,
-#     StayingIn TEXT,
-#     GoingOut TEXT,
-#     Travelling TEXT,
-#     Music TEXT,
-#     FoodDrinks TEXT
+
+async def getOppositeUsers(user_id: str, conn: Connection):
+    async with conn.cursor() as cursor:
+        try:
+            await cursor.execute("""SELECT * FROM UserInterests WHERE UserId = %s""", (user_id))
+            user_data = await cursor.fetchone()
+
+            await cursor.execute("""SELECT * 
+                                    FROM UserInterests 
+                                    WHERE UserId <> %s AND Gender <> %s""",
+                                 (user_id, user_data["Gender"]))
+            other_users = await cursor.fetchall()
+
+        except Exception as err:
+            print(err)
+
+        await cursor.close()
+
+    return user_data, other_users

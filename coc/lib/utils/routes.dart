@@ -57,7 +57,7 @@ List<GetPage> routesList = [
   ),
     GetPage(
     name: "/bookingHistory",
-    page: () => const BookingHistory(),
+    page: () =>  BookingHistory(),
     transitionDuration: const Duration(milliseconds: 500),
     transition: Transition.rightToLeftWithFade,
   ),

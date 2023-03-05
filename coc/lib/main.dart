@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: "Star Mitra",
       theme: theme,
       debugShowCheckedModeBanner: false,
-      initialRoute: "/bottomNavBar",
+      initialRoute: "/register",
       getPages: routesList,
     );
   }

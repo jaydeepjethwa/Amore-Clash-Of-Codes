@@ -58,6 +58,7 @@ class RegisterController extends GetxController with ErrorController {
       {
         "user_id": id,
         "gender": gender.value,
+        "about": aboutC.value.text,
       },
     );
 

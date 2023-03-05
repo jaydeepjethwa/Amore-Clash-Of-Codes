@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 class ChatController extends GetxController {
   late TextEditingController messageC;
@@ -14,6 +13,7 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchAllValues();
     intializeController();
   }
 
@@ -29,9 +29,7 @@ class ChatController extends GetxController {
   }
 
   String getRoomId() {
-    String id1 = arguments[0]["id1"];
-    String id2 = arguments[1]["id2"];
-    if (int.parse(id1) < int.parse(id2)) {
+    if (id1[0].codeUnitAt(0) < id2[0].codeUnitAt(0)) {
       return "$id1$id2";
     } else {
       return "$id2$id1";
@@ -42,6 +40,7 @@ class ChatController extends GetxController {
     if (messageC.value.text == "") {
       return;
     }
+    print(id1);
     Map<String, dynamic> message = {
       "sendBy": id1,
       "message": messageC.value.text,

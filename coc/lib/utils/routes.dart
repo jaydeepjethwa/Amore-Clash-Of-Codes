@@ -3,6 +3,7 @@ import 'package:coc/presentation/view/authentication/otp_screen.dart';
 import 'package:coc/presentation/view/authentication/register_screen.dart';
 import 'package:coc/presentation/view/bottom_navigation/bottom_navigation_scrren.dart';
 import 'package:coc/presentation/view/chat/chat_screen.dart';
+import 'package:coc/presentation/view/connect/hotel_screen.dart';
 import 'package:coc/presentation/view/event/event_detail.dart';
 import 'package:coc/presentation/view/prefrences/prefrences1.dart';
 import 'package:coc/presentation/view/prefrences/prefrences2.dart';
@@ -69,6 +70,12 @@ List<GetPage> routesList = [
         GetPage(
     name: "/profile",
     page: () => const Profile(),
+    transitionDuration: const Duration(milliseconds: 500),
+    transition: Transition.rightToLeftWithFade,
+  ),
+          GetPage(
+    name: "/hotel",
+    page: () => const HotelScreen(),
     transitionDuration: const Duration(milliseconds: 500),
     transition: Transition.rightToLeftWithFade,
   ),

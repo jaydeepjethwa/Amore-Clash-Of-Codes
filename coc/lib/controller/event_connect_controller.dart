@@ -5,7 +5,7 @@ import 'package:coc/service/base_client.dart';
 import 'package:get/state_manager.dart';
 import 'package:http/http.dart' as http;
 
-class ConnectionController extends GetxController {
+class EventConnectController extends GetxController {
   var connectList = <ConnectModel>[];
   var userList = <dynamic>[].obs;
   late FirebaseFirestore firestore;
@@ -20,7 +20,8 @@ class ConnectionController extends GetxController {
   }
 
   Future getAllConnects() async {
-    String url = "$baseUrl/users/$userId/matches";
+    String eventId = storage.read("liveEvent");
+    String url = "$baseUrl/users/$userId/$eventId/matches";
     dynamic header = {
       "Content-type": "application/json",
     };

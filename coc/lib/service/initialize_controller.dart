@@ -3,6 +3,7 @@ import 'package:coc/controller/bottom_navigation_controller.dart';
 import 'package:coc/controller/chat_controller.dart';
 import 'package:coc/controller/connection_controller.dart';
 import 'package:coc/controller/event_controller.dart';
+import 'package:coc/controller/hotel_controller.dart';
 import 'package:coc/controller/login_controller.dart';
 import 'package:coc/controller/otp_controller.dart';
 import 'package:coc/controller/preference_2_controller.dart';
@@ -22,5 +23,6 @@ class InitializeController {
     Get.lazyPut(() => EventController(), fenix: true);
     Get.lazyPut(() => BookingHistoryController(), fenix: true);
     Get.lazyPut(() => ConnectionController(), fenix: true);
+    Get.lazyPut(() => HotelController(), fenix: true);
   }
 }

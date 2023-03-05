@@ -1,15 +1,11 @@
-import 'package:coc/constant/color.dart';
 import 'package:coc/constant/size.dart';
 import 'package:coc/constant/textstyle.dart';
-import 'package:coc/controller/connection_controller.dart';
+import 'package:coc/controller/event_connect_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 
-class ConnectScreen extends GetView<ConnectionController> {
-  final ConnectionController controller;
-  const ConnectScreen({
-    required this.controller,
+class EventConnectScreen extends GetView<EventConnectController> {
+  const EventConnectScreen({
     super.key,
   });
 

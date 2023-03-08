@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Body, Depends
 from aiomysql.connection import Connection
-from ..models.user_interests import UserInterests
+from ..models.users import UserInterests
 from ..database import Database
-from ..database.user_interests import addUser, addInterests, getOppositeUsers, getEventUsers, makeInteraction, deactivateInteraction
+from ..database.users import addUser, addInterests, getOppositeUsers, getEventUsers, makeInteraction, deactivateInteraction
 from ..utils.data_preparation import preprocessing
 from ..utils.profile_matching import findProfileMatch
 

@@ -1,5 +1,5 @@
 from aiomysql.connection import Connection
-from ..models.user_interests import UserInterests
+from ..models.users import UserInterests
 
 
 async def addUser(user_id: str, gender: str, about: str, conn: Connection):

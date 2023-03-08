@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "Star Mitra",
+      title: "COC",
       theme: theme,
       debugShowCheckedModeBanner: false,
       initialRoute: "/register",

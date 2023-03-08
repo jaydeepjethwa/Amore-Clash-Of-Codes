@@ -1,8 +1,11 @@
 import 'dart:convert';
 
 import 'package:coc/constant/color.dart';
+import 'package:coc/constant/constant.dart';
 import 'package:coc/constant/size.dart';
 import 'package:coc/constant/textstyle.dart';
+import 'package:coc/controller/bottom_navigation_controller.dart';
+import 'package:coc/utils/dialog_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -58,24 +61,34 @@ class ProfileScreen extends StatelessWidget {
                 },
               ),
               _profileItem(
-                "Saved Profile",
-                Icons.bookmark,
-                () {},
-              ),
-              _profileItem(
                 "Prefernces",
                 Icons.room_preferences_rounded,
-                () {},
+                () {
+                  Get.toNamed("/preference1")!.then((value) {
+                    BottomNavigationController controller =
+                        Get.find<BottomNavigationController>();
+                    controller.update();
+                  });
+                },
               ),
               _profileItem(
-                "Feedback",
+                "Live Event",
                 Icons.feedback,
-                () {},
+                () {
+                  String? eventId = storage.read("liveEvent");
+                  if (eventId == null) {
+                    DialogHelper.showSnackbar("No Live Events");
+                    return;
+                  }
+                  Get.toNamed("/eventConnectMeet");
+                },
               ),
               _profileItem(
-                "Logout",
+                "Chat",
                 Icons.start,
-                () async {},
+                () async {
+                  Get.toNamed("allChat");
+                },
               ),
             ],
           ),

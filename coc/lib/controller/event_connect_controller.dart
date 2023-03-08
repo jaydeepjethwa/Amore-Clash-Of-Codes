@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:coc/constant/constant.dart';
 import 'package:coc/model/connect_model.dart';
 import 'package:coc/service/base_client.dart';
+import 'package:coc/utils/dialog_helper.dart';
+import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,7 +22,7 @@ class EventConnectController extends GetxController {
   }
 
   Future getAllConnects() async {
-    String eventId = storage.read("liveEvent");
+    int? eventId = storage.read("liveEvent");
     String url = "$baseUrl/users/$userId/$eventId/matches";
     dynamic header = {
       "Content-type": "application/json",

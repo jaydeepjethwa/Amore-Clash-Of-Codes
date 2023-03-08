@@ -63,9 +63,10 @@ class ChatScreen extends GetView<ChatController> {
                                   snapshot.data!.docs[index]["message"],
                                   style: text3,
                                 ),
-                                Text("${(snapshot.data!.docs[index]["time"] as Timestamp).toDate().hour} : ${(snapshot.data!.docs[index]["time"] as Timestamp).toDate().minute}"  ,
+                                (snapshot.data?.docs[index]["time"] != null) ?
+                                Text("${(snapshot.data?.docs[index]["time"] as Timestamp).toDate().hour} : ${(snapshot.data?.docs[index]["time"] as Timestamp).toDate().minute}",
                                   style: text4,
-                                ),
+                                ) : Container(),
                               ],
                             ),
                           ),

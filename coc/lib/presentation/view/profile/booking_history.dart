@@ -1,19 +1,16 @@
 import 'dart:convert';
 import 'package:coc/controller/booking_history_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
 import '../../../constant/color.dart';
 import '../../../constant/size.dart';
 import '../../../constant/textstyle.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class BookingHistory extends GetView<BookingHistoryController> {
-  BookingHistory({
+  const BookingHistory({
     super.key,
   });
-
 
   @override
   Widget build(BuildContext context) {

@@ -7,12 +7,24 @@ import 'package:coc/controller/event_controller.dart';
 import 'package:coc/model/event_model.dart';
 import 'package:coc/presentation/widget/custom_long_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class EventDetails extends StatelessWidget {
+class EventDetails extends StatefulWidget {
   final EventController controller;
   final EventModel event;
   const EventDetails(
       {super.key, required this.controller, required this.event});
+
+  @override
+  State<EventDetails> createState() => _EventDetailsState();
+}
+
+class _EventDetailsState extends State<EventDetails> {
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.checkReservedStatus(widget.event);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,7 @@ class EventDetails extends StatelessWidget {
                     Expanded(
                       child: Container(
                         padding: const EdgeInsets.all(12),
-                        child: Text(event.name, style: boldHeader),
+                        child: Text(widget.event.name, style: boldHeader),
                       ),
                     ),
                     Container(
@@ -49,7 +61,8 @@ class EventDetails extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            (event.capacity! - event.available!).toString(),
+                            (widget.event.capacity! - widget.event.available!)
+                                .toString(),
                             style: text1,
                           ),
                           const Padding(padding: EdgeInsets.only(left: 5)),
@@ -64,7 +77,7 @@ class EventDetails extends StatelessWidget {
                 ),
                 Image.memory(
                   const Base64Decoder().convert(
-                    event.photo,
+                    widget.event.photo,
                   ),
                   width: getWidth(context) - 100,
                 ),
@@ -74,7 +87,7 @@ class EventDetails extends StatelessWidget {
                   children: [
                     Text("Event Details", style: boldHeader),
                     Text(
-                      event.description,
+                      widget.event.description,
                       style: text3,
                       textAlign: TextAlign.justify,
                     ),
@@ -86,7 +99,7 @@ class EventDetails extends StatelessWidget {
                           style: text1,
                         ),
                         Text(
-                          event.address,
+                          widget.event.address,
                           style: appStyle,
                         )
                       ],
@@ -98,7 +111,7 @@ class EventDetails extends StatelessWidget {
                           style: text1,
                         ),
                         Text(
-                          event.scheduledOn.toString().split(" ")[0],
+                          widget.event.scheduledOn.toString().split(" ")[0],
                           style: appStyle,
                         )
                       ],
@@ -110,7 +123,10 @@ class EventDetails extends StatelessWidget {
                           style: text1,
                         ),
                         Text(
-                          event.scheduledOn.toString().split(" ")[1].split(".")[0],
+                          widget.event.scheduledOn
+                              .toString()
+                              .split(" ")[1]
+                              .split(".")[0],
                           style: appStyle,
                         )
                       ],
@@ -122,7 +138,7 @@ class EventDetails extends StatelessWidget {
                           style: text1,
                         ),
                         Text(
-                          event.available.toString(),
+                          widget.event.available.toString(),
                           style: appStyle,
                         )
                       ],
@@ -130,11 +146,17 @@ class EventDetails extends StatelessWidget {
                     verticalSpacing(vs2),
                   ],
                 ),
-                CustomLongButton(
-                  buttonText: "Reserve a Spot",
-                  onPressedFunction: () {
-                    controller.bookEvent(event);
-                  },
+                Obx(
+                  () => CustomLongButton(
+                    buttonText: (widget.controller.isReserved.value)
+                        ? "Reserved"
+                        : "Reserve a Spot",
+                    onPressedFunction: () {
+                      if (!widget.controller.isReserved.value) {
+                        widget.controller.bookEvent(widget.event);
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

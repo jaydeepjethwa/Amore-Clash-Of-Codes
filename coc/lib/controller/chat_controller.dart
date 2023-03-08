@@ -10,6 +10,7 @@ class ChatController extends GetxController {
   String id1 = "", id2 = "";
   String chatRoomId = "";
 
+
   @override
   void onInit() {
     super.onInit();
@@ -30,9 +31,9 @@ class ChatController extends GetxController {
 
   String getRoomId() {
     if (id1[0].codeUnitAt(0) < id2[0].codeUnitAt(0)) {
-      return "$id1$id2";
+      return "$id1/$id2";
     } else {
-      return "$id2$id1";
+      return "$id2/$id1";
     }
   }
 
@@ -40,7 +41,6 @@ class ChatController extends GetxController {
     if (messageC.value.text == "") {
       return;
     }
-    print(id1);
     Map<String, dynamic> message = {
       "sendBy": id1,
       "message": messageC.value.text,

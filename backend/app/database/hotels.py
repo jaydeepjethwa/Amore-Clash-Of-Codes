@@ -31,7 +31,7 @@ async def getHotels(conn):
 async def getHotelsByLocation(latitude: float, longitude: float, conn: Connection):
     async with conn.cursor() as cursor:
         try:
-            await cursor.execute("""SELECT HotelId, Name, Description, Address,
+            await cursor.execute("""SELECT HotelId, Name, Description, Address, Photo,
                                     (ST_Distance_Sphere(Location, Point(%s, %s))) AS distance
                                     FROM Hotels ORDER BY distance ASC""", (longitude, latitude))
             events = await cursor.fetchall()
@@ -48,9 +48,26 @@ async def bookHotel(hotel_id: int, user_id1: str, user_id2, scheduled_on: str, c
         try:
             await cursor.execute("""INSERT INTO HotelBooking
                                     (HotelId, UserId1, UserId2, ScheduledOn)
-                                    VALUES (%s, %s, %s, %s)""")
+                                    VALUES (%s, %s, %s, %s)""",
+                                 (hotel_id, user_id1, user_id2, scheduled_on))
             await conn.commit()
         except Exception as err:
             print(err)
 
         await cursor.close()
+
+
+async def dateScheduled(user_id: int, conn: Connection):
+    async with conn.cursor() as cursor:
+        try:
+            await cursor.execute("""SELECT Hotels.HotelId, Name, Description, Photo, Address, ScheduledOn
+                                    FROM HotelBooking AS booking, Hotels
+                                    WHERE (booking.UserId1 = %s OR booking.UserId2 = %s) AND Hotels.HotelId = booking.HotelId
+                                    ORDER BY ScheduledOn DESC LIMIT 1""")
+            date = await cursor.fetchone()
+        except Exception as err:
+            print(err)
+
+        await cursor.close()
+
+    return date

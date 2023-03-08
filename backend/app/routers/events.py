@@ -2,14 +2,14 @@ from fastapi import APIRouter, UploadFile, Body, Depends
 from aiomysql.connection import Connection
 from ..models.events import EventData
 from ..database import Database
-from ..database.events import addEvent, getEvents, getEventsByLocation, bookEvent, getUserEvents, verifyBooking
+from ..database.events import addEvent, getEvents, getEventsByLocation, bookEvent, getUserEvents, verifyBooking, updatePresence
 import base64
 
 event_router = APIRouter()
 
 
 @event_router.post("/")
-async def add_event(event_img: UploadFile,
+async def add_event(event_img: str = Body(...),
                     name: str = Body(...),
                     description: str = Body(...),
                     address: str = Body(...),
@@ -18,7 +18,6 @@ async def add_event(event_img: UploadFile,
                     capacity: int = Body(...),
                     conn: Connection = Depends(Database.get_db)):
 
-    event_img = base64.b64encode(await event_img.read())
     event_data = EventData(name=name, description=description,
                            address=address, latitude=latitude, longitude=longitude, scheduled_on=scheduled_on, capacity=capacity)
 
@@ -64,6 +63,10 @@ async def verify_user_booking(event_id: int = Body(...), user_id: str = Body(...
     booking = await verifyBooking(event_id, user_id, conn)
 
     if not booking:
-        return "no"
-
-    return "yes"
+        return {
+            "success": "no"
+        }
+    await updatePresence(event_id, user_id, conn)
+    return {
+        "success": "yes"
+    }

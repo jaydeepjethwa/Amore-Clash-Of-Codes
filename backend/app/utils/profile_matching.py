@@ -11,7 +11,7 @@ def setMatchingScore(userA: str, userB: pd.DataFrame):
     userB_embeddings = model.encode([userB["profile"]])
 
     score = cosine_similarity(userA_embeddings, userB_embeddings)[0].item()
-    userB["score"] = score * 100
+    userB["score"] = round(score * 100, 2)
 
     return userB
 
@@ -26,4 +26,4 @@ def findProfileMatch(user_profile: str, others_df: pd.DataFrame):
     others_df = others_df[others_df["score"] >= 85]
     others_df.drop(['profile'], axis=1, inplace=True)
 
-    return others_df
+    return others_df.iloc[1:, :]

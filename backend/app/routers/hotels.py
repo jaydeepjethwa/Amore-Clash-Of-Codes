@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, Body, Depends
 from aiomysql.connection import Connection
 from ..models.hotels import HotelData
 from ..database import Database
-from ..database.hotels import addHotel, getHotels, getHotelsByLocation, bookHotel
+from ..database.hotels import addHotel, getHotels, getHotelsByLocation, bookHotel, dateScheduled
 import base64
 
 hotel_router = APIRouter()
@@ -41,7 +41,7 @@ async def get_nearby_hotels(latitude: float, longitude: float, conn: Connection 
     return events
 
 
-@hotel_router.post("/book/")
+@hotel_router.post("/book")
 async def book_hotel(hotel_id: int = Body(...),
                      user_id1: str = Body(...), user_id2: str = Body(...),
                      scheduled_on: str = Body(...),
@@ -51,3 +51,10 @@ async def book_hotel(hotel_id: int = Body(...),
     return {
         "message": "Success"
     }
+
+
+@hotel_router.get("/{user_id}")
+async def get_scheduled_date(user_id: str, conn: Connection = Depends(Database.get_db)):
+    date = await dateScheduled(user_id, conn)
+
+    return date

@@ -90,3 +90,16 @@ async def verifyBooking(event_id: int, user_id: str, conn: Connection):
         await cursor.close()
 
     return booking
+
+
+async def updatePresence(event_id: int, user_id: str, conn: Connection):
+    async with conn.cursor() as cursor:
+        try:
+            await cursor.execute("""UPDATE EventBooking SET Present = TRUE 
+                                    WHERE EventId = %s AND UserId = %s""",
+                                 (event_id, user_id))
+            await conn.commit()
+        except Exception as err:
+            print(err)
+
+        await cursor.close()

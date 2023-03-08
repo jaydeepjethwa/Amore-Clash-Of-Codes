@@ -49,7 +49,7 @@ class EventDetails extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            (event.capacity - event.available).toString(),
+                            (event.capacity! - event.available!).toString(),
                             style: text1,
                           ),
                           const Padding(padding: EdgeInsets.only(left: 5)),

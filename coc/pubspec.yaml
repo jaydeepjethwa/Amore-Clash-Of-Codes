@@ -46,7 +46,9 @@ dependencies:
   uuid: 
   http: 
   geolocator: 
+  flutter_barcode_scanner: ^2.0.0
 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

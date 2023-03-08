@@ -16,6 +16,61 @@ class PreferenceController2 extends GetxController with ErrorController {
 
   var type = "";
 
+  // creativity
+  var art = false.obs,
+      design = false.obs,
+      makeup = false.obs,
+      photography = false.obs,
+      writing = false.obs,
+      craft = false.obs;
+
+  // Sports
+  var yoga = false.obs,
+      running = false.obs,
+      gym = false.obs,
+      football = false.obs,
+      cricket = false.obs,
+      badminton = false.obs;
+
+  // staying in
+  var video = false.obs,
+      gardning = false.obs,
+      cooking = false.obs,
+      board = false.obs,
+      banking = false.obs,
+      takeout = false.obs;
+
+  // Going out
+  var giga = false.obs,
+      theatre = false.obs,
+      nightClub = false.obs,
+      bars = false.obs,
+      karoke = false.obs,
+      festivals = false.obs;
+
+  // travelling
+  var beaches = false.obs,
+      spa = false.obs,
+      roadTrips = false.obs,
+      fishing = false.obs,
+      camping = false.obs,
+      hiking = false.obs;
+
+  // music
+  var hipHop = false.obs,
+      rock = false.obs,
+      country = false.obs,
+      classical = false.obs,
+      desi = false.obs,
+      jazz = false.obs;
+
+  // food
+  var wine = false.obs,
+      bear = false.obs,
+      cofee = false.obs,
+      tea = false.obs,
+      veg = false.obs,
+      nonVeg = false.obs;
 
   void handleClickOnButton(String keyValue, String value) {
     switch (keyValue) {

@@ -23,38 +23,59 @@ class ChatScreen extends GetView<ChatController> {
           onPressed: () => Get.back(),
         ),
         title: Text(
-          "Make Love",
+          "Chat",
           style: appStyle,
         ),
         backgroundColor: white,
         elevation: 0,
       ),
-      body: Container(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: [
             Expanded(
-              child: Container(
-                child: StreamBuilder<QuerySnapshot>(
-                  stream: controller.firestore
-                      .collection("chatroom")
-                      .doc(controller.chatRoomId)
-                      .collection("chats")
-                      .orderBy("time", descending: false)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (snapshot.data != null) {
-                      return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          return Text(snapshot.data!.docs[index]["message"]);
-                        },
-                      );
-                    } else {
-                      return Container();
-                    }
-                  },
-                ),
+              child: StreamBuilder<QuerySnapshot>(
+                stream: controller.firestore
+                    .collection("chatroom")
+                    .doc(controller.chatRoomId)
+                    .collection("chats")
+                    .orderBy("time", descending: false)
+                    .snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.data != null) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          margin: const EdgeInsets.only(bottom: 10.0),
+                          decoration: BoxDecoration(
+                            color: (snapshot.data!.docs[index]["sendBy"] == controller.id1) ? gradient2 : Color(0xFFFFB9DB),
+                            borderRadius: BorderRadius.circular(10.0)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  snapshot.data!.docs[index]["message"],
+                                  style: text3,
+                                ),
+                                Text("${(snapshot.data!.docs[index]["time"] as Timestamp).toDate().hour} : ${(snapshot.data!.docs[index]["time"] as Timestamp).toDate().minute}"  ,
+                                  style: text4,
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
               ),
             ),
             Container(

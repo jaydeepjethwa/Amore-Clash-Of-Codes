@@ -48,8 +48,9 @@ class RegisterController extends GetxController with ErrorController {
     await firestore.collection("user").add(data);
     await makeApiCall(id);
     storage.write("id", id);
+    storage.write("love", false);
     Get.back();
-    Get.toNamed("/preference1");
+    Get.offAllNamed("/preference1");
   }
 
   Future makeApiCall(String id) async {

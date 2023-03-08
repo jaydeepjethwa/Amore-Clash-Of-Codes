@@ -1,7 +1,9 @@
 import 'package:coc/constant/color.dart';
+import 'package:coc/constant/constant.dart';
 import 'package:coc/constant/size.dart';
 import 'package:coc/constant/textstyle.dart';
 import 'package:coc/controller/connection_controller.dart';
+import 'package:coc/utils/dialog_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/state_manager.dart';
@@ -20,10 +22,16 @@ class ConnectScreen extends GetView<ConnectionController> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/logo.png',
-              fit: BoxFit.contain,
-              height: 32,
+            GestureDetector(
+              onTap: () {
+                controller.userList.clear();
+                controller.getAllConnects();
+              },
+              child: Image.asset(
+                'assets/logo.png',
+                fit: BoxFit.contain,
+                height: 32,
+              ),
             ),
           ],
         ),
@@ -56,12 +64,22 @@ class ConnectScreen extends GetView<ConnectionController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Center(
-                              child: Image(
-                                image: const AssetImage("assets/profile.png"),
-                                height: getHeight(context) * 0.45,
-                                width: getWidth(context) - 80,
-                              ),
-                            ),
+                                child: Column(
+                              children: [
+                                (controller.userList[index]["verified"] ==
+                                        "yes")
+                                    ? const Image(
+                                        image: AssetImage("assets/check.png"),
+                                        width: 50.0,
+                                      )
+                                    : Container(),
+                                Image(
+                                  image: const AssetImage("assets/profile.png"),
+                                  height: getHeight(context) * 0.45,
+                                  width: getWidth(context) - 80,
+                                ),
+                              ],
+                            )),
                             verticalSpacing(vs2),
                             Center(
                               child: Column(
@@ -105,7 +123,11 @@ class ConnectScreen extends GetView<ConnectionController> {
                                                 ["userId"],
                                           },
                                         ],
-                                      );
+                                      )!
+                                          .then((value) {
+                                        controller.userList.clear();
+                                        controller.getAllConnects();
+                                      });
                                     },
                                     child: Text(
                                       "Meet",
@@ -113,14 +135,25 @@ class ConnectScreen extends GetView<ConnectionController> {
                                     ),
                                   ),
                                   ElevatedButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      storage.write("love", false);
+                                      controller.endDate(
+                                          controller.userList[0]["userId"]);
+                                      controller.userList.clear();
+                                      controller.getAllConnects();
+                                    },
                                     child: Text(
                                       "End Date",
                                       style: buttonStyle,
                                     ),
                                   ),
                                   ElevatedButton(
-                                    onPressed: () {
+                                    onPressed: () async {
+                                      DialogHelper.showLoader("Processing");
+                                      storage.write("love", true);
+                                      await controller.startDate(
+                                          controller.userList[index]["userId"]);
+                                      Get.back();
                                       Get.toNamed(
                                         "/chat",
                                         arguments: [
@@ -132,7 +165,11 @@ class ConnectScreen extends GetView<ConnectionController> {
                                                 ["userId"],
                                           },
                                         ],
-                                      );
+                                      )!
+                                          .then((value) {
+                                        controller.userList.clear();
+                                        controller.getAllConnects();
+                                      });
                                     },
                                     child: Text(
                                       "Chat",

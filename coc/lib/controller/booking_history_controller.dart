@@ -6,6 +6,7 @@ import 'package:coc/service/base_client.dart';
 import 'package:coc/utils/dialog_helper.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/state_manager.dart';
 
@@ -35,7 +36,6 @@ class BookingHistoryController extends GetxController {
       scannedQrCode = await FlutterBarcodeScanner.scanBarcode(
           '#fff666', 'Cancle', true, ScanMode.QR);
     } on PlatformException {}
-    print(scannedQrCode);
     if (scannedQrCode != eventList[index].eventId.toString()) {
       DialogHelper.showSnackbar("Please Select correct Event");
       return;
@@ -59,7 +59,8 @@ class BookingHistoryController extends GetxController {
       DialogHelper.showSnackbar("You haven't register for the event");
       return;
     } else {
-      print("suc");
+      storage.write("liveEvent", eventId);
+      Get.offAndToNamed("/eventConnectMeet");
     }
   }
 }

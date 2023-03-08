@@ -17,6 +17,7 @@ class EventController extends GetxController with ErrorController {
   }
 
   var eventList = <EventModel>[].obs;
+  var isReserved = false.obs;
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -77,5 +78,28 @@ class EventController extends GetxController with ErrorController {
     Get.back();
     Get.back();
     DialogHelper.showSnackbar("Event Booked Succesfully");
+  }
+
+  void checkReservedStatus(EventModel event) async {
+    String userId = storage.read("id");
+    int eventId = event.eventId;
+    String url = "$baseUrl/events/verify";
+    dynamic header = {
+      "Content-type": "application/json",
+    };
+    dynamic payload = json.encode(
+      {
+        "event_id": eventId.toString(),
+        "user_id": userId,
+      },
+    );
+    http.Response response =
+        await BaseClient().postRequest(url, payload, header);
+    var jsonesponse = json.decode(response.body);
+    if (jsonesponse["success"] == "no") {
+      isReserved.value = false;
+    } else {
+      isReserved.value = true;
+    }
   }
 }

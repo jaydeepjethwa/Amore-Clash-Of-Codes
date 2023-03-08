@@ -123,6 +123,6 @@ class PreferenceController2 extends GetxController with ErrorController {
         .postRequest(url, payload, header)
         .catchError(handleError);
 
-    Get.toNamed("/bottomNavBar");
+    Get.offAllNamed("/bottomNavBar");
   }
 }

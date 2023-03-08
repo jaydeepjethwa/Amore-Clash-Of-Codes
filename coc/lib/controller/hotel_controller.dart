@@ -15,12 +15,13 @@ class HotelController extends GetxController with ErrorController {
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
   String userId2 = "";
+  String userId1 = "";
 
   @override
   void onInit() {
     super.onInit();
     userId2 = Get.arguments[0]["id2"];
-
+    userId1 = storage.read("id");
     getAllHotels();
   }
 
@@ -65,7 +66,6 @@ class HotelController extends GetxController with ErrorController {
 
   Future bookHotel(HotelModel hotel) async {
     DialogHelper.showLoader("Booking");
-    String userId1 = "03c50e50-babb-11ed-b6d5-95ae4d1492e7";
     String url = "$baseUrl/hotels/book";
     dynamic payload = json.encode(
       {
@@ -82,8 +82,23 @@ class HotelController extends GetxController with ErrorController {
     await BaseClient()
         .postRequest(url, payload, header)
         .catchError(handleError);
-
+    await startDate();
+    storage.write("love", true);
     Get.back();
     DialogHelper.showSnackbar("Hotel Booked Succesfully");
+  }
+
+  Future startDate() async {
+    String url = "$baseUrl/users/interact";
+    dynamic payload = json.encode(
+      {
+        "user_id1": userId1,
+        "user_id2": userId2,
+      },
+    );
+    dynamic header = {
+      "Content-type": "application/json",
+    };
+    await BaseClient().postRequest(url, payload, header);
   }
 }
